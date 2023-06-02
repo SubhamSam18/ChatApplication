@@ -1,0 +1,9 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital@1&display=swap'); */
+
+.app{
+  min-height: 100vh;
+  display: flex;
+  background-image: url("../../tropical-leaves-background-zoom_23-2148580778.jpg");
+  background-size: cover;
+  background-position: center;
+}
