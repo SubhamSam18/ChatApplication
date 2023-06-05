@@ -8,8 +8,10 @@ const userRoutes = require("./routes/userRoutes");
 const app = express();
 app.use(cors());
 dotenv.config();
-
+app.use(express.json());
 connectDB();
+
+
 app.get("/", (req, res) => {
   res.send("API is Running Successfully");
 });
