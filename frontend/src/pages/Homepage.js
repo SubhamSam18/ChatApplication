@@ -28,7 +28,7 @@ const Homepage = () => {
         bg={"white"}
       >
         <Text fontSize="4xl" fontFamily="Work sans">
-          Omegiligili
+          Omegle
         </Text>
       </Box>
 

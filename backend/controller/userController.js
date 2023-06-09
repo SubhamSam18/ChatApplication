@@ -5,7 +5,7 @@ const generateToken = require("../config/generateToken");
 
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password, pic } = req.body;
-  console.log(name,email,password,pic);
+  console.log(name, email, password, pic);
   if (!name || !email || !password) {
     req.status(400);
     throw new Error("Please Enter all the Fields");
@@ -24,8 +24,8 @@ const registerUser = asyncHandler(async (req, res) => {
     password,
     pic,
   });
-  await user.save()
-  console.log(user)
+  await user.save();
+  console.log(user);
   if (user) {
     res.status(201).json({
       _id: user._id,
@@ -40,4 +40,28 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { registerUser };
+const authUser = asyncHandler(async (req, res) => {
+  const { email, password } = req.body;
+
+  const user = await ChatAppUser.findOne({ email });
+
+  if (user && (await user.matchPassword(password))) {
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      pic: user.pic,
+      token: generateToken(user._id),
+    });
+  } else {
+    res.status(401);
+    throw new Error("Invalid Email or password");
+  }
+});
+
+const allUsers = asyncHandler(async (req, res) => {
+  const keyword = req.query;
+  console.log(keyword);
+});
+
+module.exports = { registerUser, authUser };

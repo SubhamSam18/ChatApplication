@@ -8,19 +8,37 @@ import {
   InputRightElement,
   VStack,
 } from "@chakra-ui/react";
-
+// import axios from "axios";
+// import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useToast } from "@chakra-ui/react";
 const Login = () => {
   const [show, setShow] = useState(false);
   // eslint-disable-next-line
   const [email, setEmail] = useState();
   // eslint-disable-next-line
   const [password, setPassword] = useState();
-
+  // eslint-disable-next-line
+  const [loading, setLoading] = useState();
+  const toast = useToast();
   const handleClick = () => setShow(!show);
 
   // const postDetails = () => {};
 
-  const submitHandler = () => {};
+  const submitHandler = async () => {
+    setLoading(true);
+    console.log("HI");
+    if (!email || !password) {
+      toast({
+        title: "Please fill the form",
+        status: "warning",
+        duration: 4000,
+        isClosable: true,
+        position: "bottom",
+      });
+      setLoading(false);
+      return;
+    }
+  };
 
   return (
     <VStack spacing="5px">
