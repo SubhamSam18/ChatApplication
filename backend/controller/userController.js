@@ -42,7 +42,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
 const authUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
-
+  // console.log("Inside authUser");
   const user = await ChatAppUser.findOne({ email });
 
   if (user && (await user.matchPassword(password))) {
@@ -60,8 +60,19 @@ const authUser = asyncHandler(async (req, res) => {
 });
 
 const allUsers = asyncHandler(async (req, res) => {
-  const keyword = req.query;
-  console.log(keyword);
+  const keyword = req.query.search
+    ? {
+        $or: [
+          { name: { $regex: req.query.search, $options: "i" } },
+          { email: { $regex: req.query.search, $options: "i" } },
+        ],
+      }
+    : {};
+
+  const users = await ChatAppUser.find(keyword).find({_id: {$ne: req.user._id}});
+  // console.log(users);
+  res.send(users);
+  // console.log(keyword);
 });
 
-module.exports = { registerUser, authUser };
+module.exports = { registerUser, authUser, allUsers };
